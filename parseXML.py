@@ -9,7 +9,7 @@ def isGrayNote(pos):
 	return '.' in pos
 
 class NoteBase(object):
-	def __init__(self, note):
+	def __init__(self, note, tp):
 		self.line = int(note.getElementsByTagName('line{}'.format(tp))[0].childNodes[0].data) + 4
 		self.pos = str(note.getElementsByTagName('pos{}'.format(tp))[0].childNodes[0].data)
 		
@@ -20,8 +20,8 @@ class NoteBase(object):
 # line: 1-7
 # pos: 节拍数
 class NoteN(NoteBase):
-	def __init__(self, note):
-		super(NoteN, self).__init__(note)
+	def __init__(self, note, tp):
+		super(NoteN, self).__init__(note, tp)
 		
 	def generate(self, resultList, bpm):
 		resultList.append({
@@ -32,8 +32,8 @@ class NoteN(NoteBase):
 
 # 粉键
 class NoteF(NoteBase):
-	def __init__(self, note):
-		super(NoteF, self).__init__(note)
+	def __init__(self, note, tp):
+		super(NoteF, self).__init__(note, tp)
 		
 	def generate(self, resultList, bpm):
 		resultList.append({
@@ -45,8 +45,8 @@ class NoteF(NoteBase):
 # 滑条起点
 # nextNote可以是LineMiddle，LineEndN和LineEndF
 class LineStart(NoteBase):
-	def __init__(self, note):
-		super(LineStart, self).__init__(note)
+	def __init__(self, note, tp):
+		super(LineStart, self).__init__(note, tp)
 		self.lineInsts = []
 		self.nextNode = None
 		self.prevNode = None
@@ -80,8 +80,8 @@ class LineStart(NoteBase):
 
 # 滑条中间节点
 class LineMiddle(NoteBase):
-	def __init__(self, note):
-		super(LineMiddle, self).__init__(note)
+	def __init__(self, note, tp):
+		super(LineMiddle, self).__init__(note, tp)
 		self.startLine = int(note.getElementsByTagName('startlineL'.format(tp))[0].childNodes[0].data) + 4
 		self.startPos = str(note.getElementsByTagName('startposL'.format(tp))[0].childNodes[0].data)
 		self.nextNode = None
@@ -101,8 +101,8 @@ class LineMiddle(NoteBase):
 
 # 滑条终点N
 class LineEndN(NoteBase):
-	def __init__(self, note):
-		super(LineEndN, self).__init__(note)
+	def __init__(self, note, tp):
+		super(LineEndN, self).__init__(note, tp)
 		self.startLine = int(note.getElementsByTagName('startlineL'.format(tp))[0].childNodes[0].data) + 4
 		self.startPos = str(note.getElementsByTagName('startposL'.format(tp))[0].childNodes[0].data)
 		self.nextNode = None
@@ -117,8 +117,8 @@ class LineEndN(NoteBase):
 
 # 滑条终点F
 class LineEndF(NoteBase):
-	def __init__(self, note):
-		super(LineEndF, self).__init__(note)
+	def __init__(self, note, tp):
+		super(LineEndF, self).__init__(note, tp)
 		self.startLine = int(note.getElementsByTagName('startlineL'.format(tp))[0].childNodes[0].data) + 4
 		self.startPos = str(note.getElementsByTagName('startposL'.format(tp))[0].childNodes[0].data)
 		self.nextNode = None
@@ -156,7 +156,7 @@ for tp in types:
 	nodeList = root.getElementsByTagName("note{}".format(tp))
 	for note in nodeList:
 		nodeType = note.getElementsByTagName('type{}'.format(tp))[0].childNodes[0].data
-		nodeInst = nodeTypeClsDict[nodeType](note)
+		nodeInst = nodeTypeClsDict[nodeType](note, tp)
 		# 加入noteMap：
 		noteMap.setdefault(nodeInst.pos, {})
 		noteMap[nodeInst.pos][nodeInst.line] = nodeInst

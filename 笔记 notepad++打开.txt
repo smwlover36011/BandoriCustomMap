@@ -1,0 +1,63 @@
+第一步：重定向工具
+chrome插件Header Editor，可以将bestdori网站对乐曲谱面和音频的查询重定向。
+
+谱面查询，分为“谱面”和“谱面模拟”，查询的是不同的资源，资源为json格式。
+
+比如《Yes Bangdream》的谱面
+https://bestdori.com/api/songs/chart/graphics/chart/1.expert.json
+
+谱面模拟
+https://bestdori.com/api/songs/chart/graphics/simulator/1.expert.json
+
+音频查询，音频是mp3格式：
+https://bestdori.com/assets/jp/sound/bgm001_rip/bgm001.mp3
+
+我们可将上述查询重定向，比如将上述三者分别重定向为下面三条的话，则会在打开《Yes Bangdream》时看到/听到《星之鼓动》的谱面与音乐。
+https://bestdori.com/api/songs/chart/graphics/chart/2.expert.json
+https://bestdori.com/api/songs/chart/graphics/simulator/2.expert.json
+https://bestdori.com/assets/jp/sound/bgm002_rip/bgm002.mp3
+
+上述重定向也可以只开一个或两个，比如我们将谱面重定向打开，而将音频重定向关掉，则会看到《星之鼓动》的谱面，但是音乐却仍然是《Yes Bangdream》。
+
+
+第二步：谱面与模拟器资源json格式解析：
+
+json为一个list，list中的元素都是dict，其中dict均有一个key叫type。
+
+解析json：
+
+import json
+
+res = None
+
+with open("json.txt") as file:
+	res = json.load(file)
+
+if res:
+	
+	tpSet = set()
+
+	for element in res:
+		tp = element["type"]
+		tpSet.add(tp)
+		
+	print tpSet
+
+
+下面几种是map和simulator共有的：
+
+{"type":"Single","lane":6,"time":3.2432432432432434} 蓝键
+{"type":"SingleOff","lane":5,"time":30.405405405405407} 灰键
+{"type":"Long","lane":2,"time":16.54054054054054} 绿条收尾的键
+{"type":"Bar","lane":[1,1],"time":[15.567567567567568,16.054054054054053]} 绿条绿色背景
+{"type":"Sim","lane":[1,7],"time":20.10810810810811} 同时点击线
+{"type":"Tick","lane":2,"time":35.18918918918919} 绿条中间判定线
+{"type":"Flick","lane":1,"time":17.513513513513516} 粉键
+{"type":"Skill","lane":5,"time":102.4864864864865} 技能
+
+下面几种是map独有的：
+
+{"type":"BPM","bpm":185,"time":0}
+{"type":"FeverReady","time":72.32432432432432} 开始fever准备
+{"type":"FeverStart","time":83.02702702702703} 开始fever
+{"type":"FeverEnd","time":112.94594594594595} 结束fever
