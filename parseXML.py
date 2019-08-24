@@ -6,7 +6,7 @@ def calcTime(pos, bpm):
 	return 60.0 / (bpm * 2) * float(pos)
 	
 def isGrayNote(pos):
-	return '.' not in pos
+	return '.' in pos
 
 class NoteBase(object):
 	def __init__(self, note):
@@ -25,7 +25,7 @@ class NoteN(NoteBase):
 		
 	def generate(self, resultList, bpm):
 		resultList.append({
-			"type": "SingleOff" if isGrayNote else "Single",
+			"type": "SingleOff" if isGrayNote(self.pos) else "Single",
 			"lane": self.line,
 			"time": calcTime(self.pos, bpm),
 		})
