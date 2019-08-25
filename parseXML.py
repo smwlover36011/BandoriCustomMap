@@ -274,7 +274,7 @@ def process():
 			})
 			
 	import json
-	with open("1.expert.json", "w") as output:
+	with open(argvDict.get("json", "1.expert.json"), "w") as output:
 		json.dump(resultList, output)
 		
 		
