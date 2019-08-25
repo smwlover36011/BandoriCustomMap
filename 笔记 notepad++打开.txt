@@ -61,3 +61,7 @@ if res:
 {"type":"FeverReady","time":72.32432432432432} 开始fever准备
 {"type":"FeverStart","time":83.02702702702703} 开始fever
 {"type":"FeverEnd","time":112.94594594594595} 结束fever
+
+
+bangdream craft的小节标记与pos的转化规则：
+小结*8 - 8 + 单独的1/8牌数目
