@@ -3,6 +3,7 @@
 import sys
 import math
 import json
+import codecs
 import xml.dom.minidom
 from pydub import AudioSegment
 
@@ -156,63 +157,57 @@ nodeTypeClsDict = {
 
 bpmInfo = {}
 
-# 支持的命令行参数：
-# -sav super.sav 输入的sav文件名；
-# -mp3 super.mp3 输入的mp3文件名
-# -preLength 16 在谱面开始前添加的空白长度（以1/8拍的整数倍计算，若此参数值为16，则表明在谱面开始前添加16个1/8拍的长度）
-#		*谱面开始前：从sav文件的delay表示的时间开始，若delay为0.063，则表示从原音频的63ms处谱面开始，此时在音频前添加的空白长度为16个1/8拍的长度减去63ms
-# -json 1.expert.json 输出的json文件名
-# -outmp3 bgm001.mp3 输出的mp3文件名
-# -skill 32,2,128,4,224,4,320,6 技能节点，最多六个
-# -fever 224,288,448 fever准备，fever开始，fever结束时间
+# 命令行参数：文件夹名称 是否导出歌曲信息 是否导出MP3
 def process():
-	argvDict = {}
-	index = 1
+	directoryName = sys.argv[1]
+	outputSongInfo = sys.argv[2] == "1"
+	outputMP3 = sys.argv[2] == "1"
+	configFilePath = "custom/{}/{}.json".format(directoryName, directoryName)
+	config = None
+	with codecs.open(configFilePath, 'r', 'utf-8') as configFile:
+		config = json.load(configFile)
+	
+	if config is None:
+		print "Cannot load config."
+		return
+		
+	if not config.has_key("name") or not config.has_key("singer") or not config.has_key("difficulty"):
+		print "Song meta info is not enough."
+		return
+		
+	# 更改歌曲名称、歌手名称与难度：
+	if outputSongInfo:
+		with codecs.open("orig/all.5.json", 'r', 'utf-8') as songNames:
+			songs = json.load(songNames)
+			songs["1"]["bandId"] = 999
+			songs["1"]["musicTitle"] = [config["name"]] * 4
+			for index, difficulty in enumerate(config["difficulty"]):
+				songs["1"]["difficulty"][str(index)]["playLevel"] = int(difficulty)
+		
+		with codecs.open("orig/all.1.json", 'r', 'utf-8') as singerNames:
+			singers = json.load(singerNames)
+			singers["999"] = {
+				"bandName": [config["singer"]] * 4,
+			}
+		
+		with codecs.open("all/all.5.json", "w", 'utf-8') as output:
+			json.dump(songs, output, ensure_ascii=False)
+			
+		with codecs.open("all/all.1.json", "w", 'utf-8') as output:
+			json.dump(singers, output, ensure_ascii=False)
+		
+	# 记录技能节点位置与fever位置：
 	skills = []
 	fevers = []
-	while index < len(sys.argv):
-		currArg = sys.argv[index]
-		if currArg == "-sav":
-			argvDict["sav"] = sys.argv[index + 1]
-			index += 1
-		elif currArg == "-mp3":
-			argvDict["mp3"] = sys.argv[index + 1]
-			index += 1
-		elif currArg == "-preLength":
-			argvDict["preLength"] = int(sys.argv[index + 1])
-			index += 1
-		elif currArg == "-json":
-			argvDict["json"] = sys.argv[index + 1]
-			index += 1
-		elif currArg == "-outmp3":
-			argvDict["outmp3"] = sys.argv[index + 1]
-			index += 1
-		elif currArg == "-skill":
-			skillStr = sys.argv[index + 1]
-			index += 1
-			# 处理skillStr
-			skillStrList = skillStr.split(",")
-			for i in xrange(len(skillStrList)):
-				if i % 2 == 1:
-					continue
-				skillPos = skillStrList[i]
-				skillLine = int(skillStrList[i + 1])
-				skills.append((skillPos, skillLine))
-		elif currArg == "-fever":
-			feverStr = sys.argv[index + 1]
-			index += 1
-			# 处理feverStr
-			feverStrList = feverStr.split(",")
-			for str in feverStrList:
-				fevers.append(str)
-			
-		index += 1
+	for skill in config.get("skills", []):
+		skillPos = str(skill[0])
+		skillLine = skill[1]
+		skills.append((skillPos, skillLine))
+	for fever in config.get("fevers", []):
+		fevers.append(str(fever))
 	
-	if "sav" not in argvDict:
-		print "No input sav file path."
-		return
-
-	document = xml.dom.minidom.parse(argvDict["sav"])
+	# 读取sav文件：
+	document = xml.dom.minidom.parse("custom/{}/{}.sav".format(directoryName, directoryName))
 	root = document.documentElement
 	types = ["N", "L", "F"]
 
@@ -273,8 +268,8 @@ def process():
 	preLength = 0
 	length = 0
 	valid = False
-	if "preLength" in argvDict:
-		preLength = argvDict["preLength"]
+	if config.has_key("preLength"):
+		preLength = config["preLength"]
 		length = 60.0 / (bpm * 2) * (preLength - 1) # 虽然不知道为什么，但是这里好像要减去1/8拍？暂时存疑，看看这个方法是不是每首歌都适用。
 		if length >= delay:
 			valid = True
@@ -289,11 +284,11 @@ def process():
 	bpmInfo["preLength"] = preLength
 	
 	# 打开MP3文件，生成新的MP3文件：
-	if "mp3" in argvDict:
-		music = AudioSegment.from_file(argvDict["mp3"])
+	if outputMP3:
+		music = AudioSegment.from_file("custom/{}/{}.mp3".format(directoryName, directoryName))
 		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
 		resMusic = blank + music
-		resMusic.export("music/{}".format(argvDict.get("outmp3", "bgm001.mp3")), format="mp3")
+		resMusic.export("music/{}".format(config.get("outputMP3", "bgm001.mp3")), format="mp3")
 
 	#开始生成json：
 	resultListMap = []
@@ -334,9 +329,9 @@ def process():
 			resultListMap.append(simDict)
 			resultListSimulator.append(simDict)
 	
-	with open("graphics/simulator/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
+	with open("graphics/simulator/{}".format(config.get("outputJson", "1.expert.json")), "wt") as output:
 		json.dump(resultListSimulator, output)
-	with open("graphics/chart/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
+	with open("graphics/chart/{}".format(config.get("outputJson", "1.expert.json")), "wt") as output:
 		json.dump(resultListMap, output)
 
 if __name__ == "__main__":
