@@ -241,7 +241,7 @@ def process():
 	# 打开MP3文件，生成新的MP3文件：
 	if "mp3" in argvDict:
 		music = AudioSegment.from_file(argvDict["mp3"])
-		blank = AudioSegment.silent(duration=int(length * 1000))
+		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
 		resMusic = blank + music
 		resMusic.export("music/{}".format(argvDict.get("outmp3", "bgm001.mp3")), format="mp3")
 
