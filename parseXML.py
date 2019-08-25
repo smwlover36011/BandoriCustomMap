@@ -158,18 +158,18 @@ bpmInfo = {}
 
 # 支持的命令行参数：
 # -sav super.sav 输入的sav文件名；
-# -map 导出map谱面；
-# -simulator 导出simulator谱面；
 # -mp3 super.mp3 输入的mp3文件名
 # -preLength 16 在谱面开始前添加的空白长度（以1/8拍的整数倍计算，若此参数值为16，则表明在谱面开始前添加16个1/8拍的长度）
 #		*谱面开始前：从sav文件的delay表示的时间开始，若delay为0.063，则表示从原音频的63ms处谱面开始，此时在音频前添加的空白长度为16个1/8拍的长度减去63ms
 # -json 1.expert.json 输出的json文件名
 # -outmp3 bgm001.mp3 输出的mp3文件名
 # -skill 32,2,128,4,224,4,320,6 技能节点，最多六个
+# -fever 224,288,448 fever准备，fever开始，fever结束时间
 def process():
 	argvDict = {}
 	index = 1
 	skills = []
+	fevers = []
 	while index < len(sys.argv):
 		currArg = sys.argv[index]
 		if currArg == "-sav":
@@ -187,10 +187,6 @@ def process():
 		elif currArg == "-outmp3":
 			argvDict["outmp3"] = sys.argv[index + 1]
 			index += 1
-		elif currArg == "-map":
-			argvDict["map"] = True
-		elif currArg == "-simulator":
-			argvDict["simulator"] = True
 		elif currArg == "-skill":
 			skillStr = sys.argv[index + 1]
 			index += 1
@@ -202,6 +198,13 @@ def process():
 				skillPos = skillStrList[i]
 				skillLine = int(skillStrList[i + 1])
 				skills.append((skillPos, skillLine))
+		elif currArg == "-fever":
+			feverStr = sys.argv[index + 1]
+			index += 1
+			# 处理feverStr
+			feverStrList = feverStr.split(",")
+			for str in feverStrList:
+				fevers.append(str)
 			
 		index += 1
 	
@@ -254,6 +257,17 @@ def process():
 			print "Cannot change {} note to skill note.".format(noteInst.__class__.__name__)
 		else:
 			noteInst.setToSkill()
+			
+	# 添加fever信息：
+	for index, fever in enumerate(fevers):
+		if index == 0:
+			flag = "FeverReady"
+		elif index == 1:
+			flag = "FeverStart"
+		else:
+			flag = "FeverEnd"
+		noteMap.setdefault(fever, {})
+		noteMap[fever][-1] = flag
 	
 	# 计算要添加多长时间的空白：
 	preLength = 0
@@ -282,37 +296,48 @@ def process():
 		resMusic.export("music/{}".format(argvDict.get("outmp3", "bgm001.mp3")), format="mp3")
 
 	#开始生成json：
-	resultList = []
+	resultListMap = []
+	resultListMap.append({
+		"type": "BPM",
+		"bpm": bpm,
+		"time": 0,
+	})
+	resultListSimulator = []
 	times = noteMap.keys()
 	times.sort(key=lambda item: float(item))
 	
 	for tm in times:
 		notes = noteMap[tm]
+		# fever标记：
+		if notes.has_key(-1):
+			flag = notes[-1]
+			resultListMap.append({
+				"type": flag,
+				"time": calcTime(tm),
+			})
+			notes.pop(-1)
+		# 其余note输出：
 		noteList = notes.values()
 		hasSim = len(noteList) == 2
 		for note in noteList:
-			note.generate(resultList)
+			note.generate(resultListMap)
+			note.generate(resultListSimulator)
 			if note.__class__.__name__ == "LineMiddle":
 				hasSim = False
 		# 是否有同时点击线
 		if hasSim:
-			resultList.append({
+			simDict = {
 				"type": "Sim",
 				"lane": [noteList[0].line, noteList[1].line],
 				"time": calcTime(tm),
-			})
+			}		
+			resultListMap.append(simDict)
+			resultListSimulator.append(simDict)
 	
-	if "simulator" in argvDict:
-		with open("graphics/simulator/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
-			json.dump(resultList, output)
-	if "map" in argvDict:
-		resultList.insert(0, {
-			"type": "BPM",
-			"bpm": bpm,
-			"time": 0,
-		})
-		with open("graphics/chart/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
-			json.dump(resultList, output)
+	with open("graphics/simulator/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
+		json.dump(resultListSimulator, output)
+	with open("graphics/chart/{}".format(argvDict.get("json", "1.expert.json")), "wt") as output:
+		json.dump(resultListMap, output)
 
 if __name__ == "__main__":
 	process()
