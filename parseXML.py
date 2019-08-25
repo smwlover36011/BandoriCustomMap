@@ -243,19 +243,21 @@ def process():
 		music = AudioSegment.from_file(argvDict["mp3"])
 		blank = AudioSegment.silent(duration=int(length * 1000))
 		resMusic = blank + music
-		resMusic.export(argvDict.get("outmp3", "bgm001.mp3"), format="mp3")
+		resMusic.export("music/{}".format(argvDict.get("outmp3", "bgm001.mp3")), format="mp3")
 
 	#开始生成json：
 	resultList = []
 	times = noteMap.keys()
 	times.sort(key=lambda item: float(item))
-
+	
+	mapType = "simulator"
 	if "map" in argvDict:
 		resultList.append({
 			"type": "BPM",
 			"bpm": bpm,
 			"time": 0,
 		})
+		mapType = "chart"
 
 	for tm in times:
 		notes = noteMap[tm]
@@ -274,7 +276,7 @@ def process():
 			})
 			
 	import json
-	with open(argvDict.get("json", "1.expert.json"), "w") as output:
+	with open("graphics/{}/{}".format(mapType, argvDict.get("json", "1.expert.json")), "wt") as output:
 		json.dump(resultList, output)
 		
 		
