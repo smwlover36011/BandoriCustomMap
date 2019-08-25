@@ -225,7 +225,7 @@ def process():
 	valid = False
 	if "preLength" in argvDict:
 		preLength = argvDict["preLength"]
-		length = 60.0 / (bpm * 2) * preLength
+		length = 60.0 / (bpm * 2) * (preLength - 1) # 虽然不知道为什么，但是这里好像要减去1/8拍
 		if length >= delay:
 			valid = True
 	
@@ -234,7 +234,7 @@ def process():
 		preLengthFloat = delay / (60.0 / (bpm * 2)) / 8
 		preLengthFloat = math.ceil(preLengthFloat)
 		preLength = int(preLengthFloat) * 8
-		length = 60.0 / (bpm * 2) * preLength
+		length = 60.0 / (bpm * 2) * (preLength - 1) # 虽然不知道为什么，但是这里好像要减去1/8拍
 		
 	bpmInfo["preLength"] = preLength
 	
