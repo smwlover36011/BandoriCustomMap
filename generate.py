@@ -5,7 +5,6 @@ import math
 import json
 import codecs
 import xml.dom.minidom
-from pydub import AudioSegment
 
 def calcTime(pos):
 	bpm = bpmInfo["bpm"]
@@ -161,7 +160,7 @@ bpmInfo = {}
 def process():
 	directoryName = sys.argv[1]
 	outputSongInfo = sys.argv[2] == "1"
-	outputMP3 = sys.argv[2] == "1"
+	outputMP3 = sys.argv[3] == "1"
 	configFilePath = "custom/{}/{}.json".format(directoryName, directoryName)
 	config = None
 	with codecs.open(configFilePath, 'r', 'utf-8') as configFile:
@@ -285,6 +284,7 @@ def process():
 	
 	# 打开MP3文件，生成新的MP3文件：
 	if outputMP3:
+		from pydub import AudioSegment
 		music = AudioSegment.from_file("custom/{}/{}.mp3".format(directoryName, directoryName))
 		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
 		resMusic = blank + music
