@@ -1079,7 +1079,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>1</lineN>
+    <lineN>0</lineN>
     <posN>483.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1094,7 +1094,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
+    <lineN>0</lineN>
     <posN>485.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1174,7 +1174,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>1</lineN>
     <posN>473.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1194,7 +1194,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>-1</lineN>
     <posN>475.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1204,7 +1204,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>1</lineN>
     <posN>477.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1239,7 +1239,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
+    <lineN>0</lineN>
     <posN>481.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1479,7 +1479,7 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>-1</lineN>
     <posN>471.5</posN>
     <typeN>N</typeN>
   </noteN>
@@ -2558,6 +2558,20 @@
     <typeL>LS</typeL>
     <startlineL>-1</startlineL>
     <startposL>468</startposL>
+  </noteL>
+  <noteL>
+    <lineL>-3</lineL>
+    <posL>324</posL>
+    <typeL>LS</typeL>
+    <startlineL>-3</startlineL>
+    <startposL>324</startposL>
+  </noteL>
+  <noteL>
+    <lineL>3</lineL>
+    <posL>324</posL>
+    <typeL>LS</typeL>
+    <startlineL>3</startlineL>
+    <startposL>324</startposL>
   </noteL>
   <noteL>
     <lineL>-3</lineL>
@@ -3806,13 +3820,6 @@
     <startposL>400</startposL>
   </noteL>
   <noteL>
-    <lineL>-3</lineL>
-    <posL>324</posL>
-    <typeL>LS</typeL>
-    <startlineL>-3</startlineL>
-    <startposL>324</startposL>
-  </noteL>
-  <noteL>
     <lineL>0</lineL>
     <posL>327</posL>
     <typeL>LE</typeL>
@@ -3831,13 +3838,6 @@
     <posL>325</posL>
     <typeL>LM</typeL>
     <startlineL>-3</startlineL>
-    <startposL>324</startposL>
-  </noteL>
-  <noteL>
-    <lineL>3</lineL>
-    <posL>324</posL>
-    <typeL>LS</typeL>
-    <startlineL>3</startlineL>
     <startposL>324</startposL>
   </noteL>
   <noteL>
