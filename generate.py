@@ -322,29 +322,25 @@ def process(musicIndex, directoryName, outputMP3):
 		noteMap[fever][-1] = flag
 	
 	# 计算要添加多长时间的空白：
+	# delay*8 是延迟的拍数（再乘以60/bpm才是延迟的秒数）
 	preLength = 0
 	length = 0
 	valid = False
 	if config.has_key("preLength"):
 		preLength = config["preLength"]
-		length = 60.0 / (bpm * 2) * (preLength - 1) # 虽然不知道为什么，但是这里好像要减去1/8拍？暂时存疑，看看这个方法是不是每首歌都适用。
-		if length >= delay:
+		if preLength >= delay * 16:
 			valid = True
-	
-	if not valid:
-		# 需要自动算出preLength：
-		preLengthFloat = delay / (60.0 / (bpm * 2)) / 8
-		preLengthFloat = math.ceil(preLengthFloat)
-		preLength = int(preLengthFloat) * 8
-		length = 60.0 / (bpm * 2) * (preLength - 1) # 虽然不知道为什么，但是这里好像要减去1/8拍？暂时存疑，看看这个方法是不是每首歌都适用。
-		
+
+	if valid:
+		length = 60.0 / (bpm * 2) * (preLength - delay * 16)
+
 	bpmInfo["preLength"] = preLength
 	
 	# 打开MP3文件，生成新的MP3文件：
 	if outputMP3:
 		from pydub import AudioSegment
 		music = AudioSegment.from_file("custom/{}/{}.mp3".format(directoryName, directoryName))
-		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
+		blank = AudioSegment.silent(duration=int(length * 1000))
 		resMusic = blank + music
 		resMusic.export("music/bgm%03d.mp3" % musicIndex, format="mp3")
 

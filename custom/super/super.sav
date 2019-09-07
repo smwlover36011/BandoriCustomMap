@@ -2,7 +2,7 @@
   <info>
     <music>super.sav</music>
     <bpm>174</bpm>
-    <delay>0.063</delay>
+    <delay>0.0706875</delay>
     <bpmP1>
     </bpmP1>
     <bpmD1>0</bpmD1>
@@ -2569,6 +2569,13 @@
     <startposL>324</startposL>
   </noteL>
   <noteL>
+    <lineL>3</lineL>
+    <posL>19</posL>
+    <typeL>LS</typeL>
+    <startlineL>3</startlineL>
+    <startposL>19</startposL>
+  </noteL>
+  <noteL>
     <lineL>-3</lineL>
     <posL>2</posL>
     <typeL>LE</typeL>
@@ -3820,13 +3827,6 @@
     <typeL>LF</typeL>
     <startlineL>3</startlineL>
     <startposL>334</startposL>
-  </noteL>
-  <noteL>
-    <lineL>3</lineL>
-    <posL>19</posL>
-    <typeL>LS</typeL>
-    <startlineL>3</startlineL>
-    <startposL>19</startposL>
   </noteL>
   <noteL>
     <lineL>2</lineL>
