@@ -211,7 +211,7 @@ def processMusicMetaInfo():
 			for diffIndex in xrange(4)},
 			"tag": "normal",
 			"publishedAt": ["1462071600000", "1462104000000", "1462075200000", "1462075200000"],
-			"jacketImage": ["karma"],
+			"jacketImage": [songID2Jacket[validSongIDList[index]]],
 		}
 	
 	with codecs.open("all/all.5.json", "w", 'utf-8') as output:
