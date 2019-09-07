@@ -219,6 +219,15 @@ def processMusicMetaInfo():
 		
 	with codecs.open("all/all.1.json", "w", 'utf-8') as output:
 		json.dump(singers, output, ensure_ascii=False)
+		
+	# 拷贝每张图片到musicjacket文件夹下：
+	for index, mapName in enumerate(mapList):
+		jacketPath = "custom/{}/{}.png".format(mapName, mapName)
+		jacketNewName = songID2Jacket[validSongIDList[index]]
+		targetPath = "musicjacket/{}.png".format(jacketNewName)
+		with open(jacketPath, "rb") as source:
+			with open(targetPath, "wb") as target:
+				target.write(source.read())
 
 # 命令行参数：文件夹名称 是否导出MP3
 def processMusics(directoryName, outputMP3):
