@@ -154,8 +154,27 @@ nodeTypeClsDict = {
 	"LF": LineEndF,
 }
 
-defaultSingerIDOffest = 9000
-defaultSongIDOffest = 9000
+# 全局数据：
+validSongIDList = []
+songID2Jacket = {}
+bpmInfo = {}
+
+def loadValidSongIDList():
+	if len(validSongIDList) != 0:
+		return
+	# 读取原始songlist，找到可用的songID、和jacketImage，构建可用ID列表：
+	with codecs.open("orig/all.5.json", 'r', 'utf-8') as songListFile:
+		origSongs = json.load(songListFile)
+	
+	songIDList = sorted([int(songID) for songID in origSongs.keys()])
+	jackets = set()
+	for songID in songIDList:
+		songInfo = origSongs[str(songID)]
+		jacket = songInfo["jacketImage"][0]
+		if jacket not in jackets:
+			songID2Jacket[songID] = jacket
+			validSongIDList.append(songID)
+			jackets.add(jacket)
 
 def getSingleMapMetaInfo(mapName):
 	configFilePath = "custom/{}/{}.json".format(mapName, mapName)
@@ -165,6 +184,8 @@ def getSingleMapMetaInfo(mapName):
 	return config
 
 def processMusicMetaInfo():
+	loadValidSongIDList()
+	
 	# 读取custom/maplist.dat：
 	mapListFilePath = "custom/maplist.json"
 	mapList = []
@@ -172,18 +193,14 @@ def processMusicMetaInfo():
 		mapList = json.load(mapListFile)
 	mapData = [getSingleMapMetaInfo(mapName) for mapName in mapList]
 	
-	# 读取原始的歌曲列表和歌手列表：
-	with codecs.open("orig/all.5.json", 'r', 'utf-8') as songListFile:
-		songs = json.load(songListFile)
-	with codecs.open("orig/all.1.json", 'r', 'utf-8') as singerListFile:
-		singers = json.load(singerListFile)
-	
+	songs = {}
+	singers = {}
 	for index, mapInfo in enumerate(mapData):
-		singerIndex = defaultSingerIDOffest + index
+		singerIndex = index + 1
 		singers[str(singerIndex)] = {
 			"bandName": [mapInfo["singer"]] * 4,
 		}
-		songIndex = defaultSongIDOffest + index
+		songIndex = validSongIDList[index]
 		songs[str(songIndex)] = {
 			"bandId": singerIndex,
 			"musicTitle": [mapInfo["name"]] * 4,
@@ -203,8 +220,6 @@ def processMusicMetaInfo():
 	with codecs.open("all/all.1.json", "w", 'utf-8') as output:
 		json.dump(singers, output, ensure_ascii=False)
 
-bpmInfo = {}
-
 # 命令行参数：文件夹名称 是否导出MP3
 def processMusics(directoryName, outputMP3):
 	directories = {}
@@ -212,13 +227,13 @@ def processMusics(directoryName, outputMP3):
 	mapList = []
 	with codecs.open(mapListFilePath, 'r', 'utf-8') as mapListFile:
 		mapList = json.load(mapListFile)
+		
+	loadValidSongIDList()
 	
 	for index, mapName in enumerate(mapList):
-		songIndex = defaultSongIDOffest + index
+		songIndex = validSongIDList[index]
 		if directoryName == "ALL" or mapName == directoryName:
 			directories[songIndex] = mapName
-	
-	print directories
 	
 	for key, value in directories.iteritems():
 		process(key, value, outputMP3)
@@ -322,7 +337,7 @@ def process(musicIndex, directoryName, outputMP3):
 		music = AudioSegment.from_file("custom/{}/{}.mp3".format(directoryName, directoryName))
 		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
 		resMusic = blank + music
-		resMusic.export("music/bgm{}.mp3".format(musicIndex), format="mp3")
+		resMusic.export("music/bgm%03d.mp3" % musicIndex, format="mp3")
 
 	#开始生成json：
 	resultListMap = []
