@@ -154,47 +154,81 @@ nodeTypeClsDict = {
 	"LF": LineEndF,
 }
 
-bpmInfo = {}
+defaultSingerIDOffest = 9000
+defaultSongIDOffest = 9000
 
-# 命令行参数：文件夹名称 是否导出歌曲信息 是否导出MP3
-def process():
-	directoryName = sys.argv[1]
-	outputSongInfo = sys.argv[2] == "1"
-	outputMP3 = sys.argv[3] == "1"
-	configFilePath = "custom/{}/{}.json".format(directoryName, directoryName)
-	config = None
+def getSingleMapMetaInfo(mapName):
+	configFilePath = "custom/{}/{}.json".format(mapName, mapName)
+	config = {}
 	with codecs.open(configFilePath, 'r', 'utf-8') as configFile:
 		config = json.load(configFile)
+	return config
+
+def processMusicMetaInfo():
+	# 读取custom/maplist.dat：
+	mapListFilePath = "custom/maplist.json"
+	mapList = []
+	with codecs.open(mapListFilePath, 'r', 'utf-8') as mapListFile:
+		mapList = json.load(mapListFile)
+	mapData = [getSingleMapMetaInfo(mapName) for mapName in mapList]
 	
-	if config is None:
-		print "Cannot load config."
-		return
+	# 读取原始的歌曲列表和歌手列表：
+	with codecs.open("orig/all.5.json", 'r', 'utf-8') as songListFile:
+		songs = json.load(songListFile)
+	with codecs.open("orig/all.1.json", 'r', 'utf-8') as singerListFile:
+		singers = json.load(singerListFile)
+	
+	for index, mapInfo in enumerate(mapData):
+		singerIndex = defaultSingerIDOffest + index
+		singers[str(singerIndex)] = {
+			"bandName": [mapInfo["singer"]] * 4,
+		}
+		songIndex = defaultSongIDOffest + index
+		songs[str(songIndex)] = {
+			"bandId": singerIndex,
+			"musicTitle": [mapInfo["name"]] * 4,
+			"difficulty": {
+				str(diffIndex): {
+					"playLevel": int(mapInfo["difficulty"][diffIndex]),
+				}
+			for diffIndex in xrange(4)},
+			"tag": "normal",
+			"publishedAt": ["1462071600000", "1462104000000", "1462075200000", "1462075200000"],
+			"jacketImage": ["karma"],
+		}
+	
+	with codecs.open("all/all.5.json", "w", 'utf-8') as output:
+		json.dump(songs, output, ensure_ascii=False)
 		
-	if not config.has_key("name") or not config.has_key("singer") or not config.has_key("difficulty"):
-		print "Song meta info is not enough."
-		return
-		
-	# 更改歌曲名称、歌手名称与难度：
-	if outputSongInfo:
-		with codecs.open("orig/all.5.json", 'r', 'utf-8') as songNames:
-			songs = json.load(songNames)
-			songs["1"]["bandId"] = 999
-			songs["1"]["musicTitle"] = [config["name"]] * 4
-			for index, difficulty in enumerate(config["difficulty"]):
-				songs["1"]["difficulty"][str(index)]["playLevel"] = int(difficulty)
-		
-		with codecs.open("orig/all.1.json", 'r', 'utf-8') as singerNames:
-			singers = json.load(singerNames)
-			singers["999"] = {
-				"bandName": [config["singer"]] * 4,
-			}
-		
-		with codecs.open("all/all.5.json", "w", 'utf-8') as output:
-			json.dump(songs, output, ensure_ascii=False)
-			
-		with codecs.open("all/all.1.json", "w", 'utf-8') as output:
-			json.dump(singers, output, ensure_ascii=False)
-		
+	with codecs.open("all/all.1.json", "w", 'utf-8') as output:
+		json.dump(singers, output, ensure_ascii=False)
+
+bpmInfo = {}
+
+# 命令行参数：文件夹名称 是否导出MP3
+def processMusics(directoryName, outputMP3):
+	directories = {}
+	mapListFilePath = "custom/maplist.json"
+	mapList = []
+	with codecs.open(mapListFilePath, 'r', 'utf-8') as mapListFile:
+		mapList = json.load(mapListFile)
+	
+	for index, mapName in enumerate(mapList):
+		songIndex = defaultSongIDOffest + index
+		if directoryName == "ALL" or mapName == directoryName:
+			directories[songIndex] = mapName
+	
+	print directories
+	
+	for key, value in directories.iteritems():
+		process(key, value, outputMP3)
+		bpmInfo.clear()
+	
+	
+def process(musicIndex, directoryName, outputMP3):
+	print "======Process map:", directoryName
+	config = getSingleMapMetaInfo(directoryName)
+
 	# 记录技能节点位置与fever位置：
 	skills = []
 	fevers = []
@@ -288,7 +322,7 @@ def process():
 		music = AudioSegment.from_file("custom/{}/{}.mp3".format(directoryName, directoryName))
 		blank = AudioSegment.silent(duration=int((length - delay) * 1000))
 		resMusic = blank + music
-		resMusic.export("music/{}".format(config.get("outputMP3", "bgm001.mp3")), format="mp3")
+		resMusic.export("music/bgm{}.mp3".format(musicIndex), format="mp3")
 
 	#开始生成json：
 	resultListMap = []
@@ -329,10 +363,15 @@ def process():
 			resultListMap.append(simDict)
 			resultListSimulator.append(simDict)
 	
-	with open("graphics/simulator/{}".format(config.get("outputJson", "1.expert.json")), "wt") as output:
+	with open("graphics/simulator/{}.expert.json".format(musicIndex), "wt") as output:
 		json.dump(resultListSimulator, output)
-	with open("graphics/chart/{}".format(config.get("outputJson", "1.expert.json")), "wt") as output:
+	with open("graphics/chart/{}.expert.json".format(musicIndex), "wt") as output:
 		json.dump(resultListMap, output)
 
 if __name__ == "__main__":
-	process()
+	if sys.argv[1] == "songList":
+		processMusicMetaInfo()
+	elif sys.argv[1] == "song":
+		directoryName = sys.argv[2]
+		outputMP3 = sys.argv[3] == "1" if len(sys.argv) >= 4 else False
+		processMusics(directoryName, outputMP3)
