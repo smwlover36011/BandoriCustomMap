@@ -205,10 +205,10 @@ def processMusicMetaInfo():
 			"bandId": singerIndex,
 			"musicTitle": [mapInfo["name"]] * 4,
 			"difficulty": {
-				str(diffIndex): {
-					"playLevel": int(mapInfo["difficulty"][diffIndex]),
+				"3": {
+					"playLevel": int(mapInfo["difficulty"]),
 				}
-			for diffIndex in xrange(4)},
+			},
 			"tag": "normal",
 			"publishedAt": ["1462071600000", "1462104000000", "1462075200000", "1462075200000"],
 			"jacketImage": [songID2Jacket[validSongIDList[index]]],
