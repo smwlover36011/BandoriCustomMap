@@ -308,7 +308,7 @@ def process(musicIndex, directoryName, outputMP3):
 		if noteInst is None:
 			print "No note at {}, {}".format(skillPos, skillLine)
 		elif noteInst.__class__.__name__ not in ["LineStart", "NoteN"]:
-			print "Cannot change {} note to skill note.".format(noteInst.__class__.__name__)
+			print "Cannot change {} note to skill note. {} {}".format(noteInst.__class__.__name__, skillPos, skillLine)
 		else:
 			noteInst.setToSkill()
 			
