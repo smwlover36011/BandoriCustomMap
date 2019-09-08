@@ -274,8 +274,10 @@ def process(musicIndex, directoryName, outputMP3):
 
 	info = root.getElementsByTagName("info")[0]
 	bpm = int(info.getElementsByTagName("bpm")[0].childNodes[0].data)
+	delay = config.get("delay", 0) #delay是歌曲开始播放到谱面第0拍开始之间的秒数，和sav文件里的delay不同。
+	preLength = config.get("preLength", 8) #preLength是往谱面第0拍前添加的空白的1/8拍的数量。
+	bpmInfo["preLength"] = preLength
 	bpmInfo["bpm"] = bpm
-	delay = float(info.getElementsByTagName("delay")[0].childNodes[0].data)
 
 	for tp in types:
 		nodeList = root.getElementsByTagName("note{}".format(tp))
@@ -321,20 +323,9 @@ def process(musicIndex, directoryName, outputMP3):
 		noteMap.setdefault(fever, {})
 		noteMap[fever][-1] = flag
 	
-	# 计算要添加多长时间的空白：
-	# delay*8 是延迟的拍数（再乘以60/bpm才是延迟的秒数）
-	preLength = 0
-	length = 0
-	valid = False
-	if config.has_key("preLength"):
-		preLength = config["preLength"]
-		if preLength >= delay * 16:
-			valid = True
-
-	if valid:
-		length = 60.0 / (bpm * 2) * (preLength - delay * 16)
-
-	bpmInfo["preLength"] = preLength
+	# 计算要添加多长时间的空白：、
+	length = 60.0 / (bpm * 2) * preLength - delay
+	length = max(0, length)
 	
 	# 打开MP3文件，生成新的MP3文件：
 	if outputMP3:
