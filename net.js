@@ -1,7 +1,7 @@
 //正则表达式匹配：
 var paths = [
-    ["^/api/songs/chart/graphics/chart/([0-9]{1,3}).expert.json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/graphics/chart/$1.expert.json"],
-    ["^/api/songs/chart/graphics/simulator/([0-9]{1,3}).expert.json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/graphics/simulator/$1.expert.json"],
+    ["^/api/songs/chart/graphics/chart/([0-9]{1,3}).(expert|easy|normal|hard).json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/graphics/chart/$1.$2.json"],
+    ["^/api/songs/chart/graphics/simulator/([0-9]{1,3}).(expert|easy|normal|hard).json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/graphics/simulator/$1.$2.json"],
     ["^/assets/(jp|en|cn|tw)/sound/bgm([0-9][0-9][0-9])_rip/bgm([0-9][0-9][0-9]).mp3$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/music/bgm$2.mp3"],
     ["^/api/songs/all.5.json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/all/all.5.json"],
     ["^/api/bands/all.1.json$", "https://raw.githubusercontent.com/smwlover36011/BandoriCustomMap/master/all/all.1.json"],

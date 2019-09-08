@@ -374,9 +374,9 @@ def process(musicIndex, directoryName, outputMP3):
 			resultListMap.append(simDict)
 			resultListSimulator.append(simDict)
 	
-	with open("graphics/simulator/{}.expert.json".format(musicIndex), "wt") as output:
+	with open("graphics/simulator/{}.easy.json".format(musicIndex), "wt") as output:
 		json.dump(resultListSimulator, output)
-	with open("graphics/chart/{}.expert.json".format(musicIndex), "wt") as output:
+	with open("graphics/chart/{}.easy.json".format(musicIndex), "wt") as output:
 		json.dump(resultListMap, output)
 
 if __name__ == "__main__":
