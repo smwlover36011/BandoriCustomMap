@@ -325,9 +325,6 @@ def process(musicIndex, directoryName, outputMP3):
 	
 	# 计算要添加多长时间的空白：、
 	length = 60.0 / (bpm * 2) * preLength - delay
-	print 60.0 / (bpm * 2) * preLength
-	print delay
-	print length
 	length = max(0, length)
 	
 	# 打开MP3文件，生成新的MP3文件：
