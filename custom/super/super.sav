@@ -1284,12 +1284,12 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>3</lineN>
+    <lineN>-1</lineN>
     <posN>226</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-3</lineN>
+    <lineN>1</lineN>
     <posN>228</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1350,11 +1350,6 @@
   </noteN>
   <noteN>
     <lineN>3</lineN>
-    <posN>204</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>3</lineN>
     <posN>202</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1366,6 +1361,31 @@
   <noteN>
     <lineN>3</lineN>
     <posN>246</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>2</lineN>
+    <posN>204</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>-2</lineN>
+    <posN>204</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>-1</lineN>
+    <posN>206</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>1</lineN>
+    <posN>205</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>1</lineN>
+    <posN>207</posN>
     <typeN>N</typeN>
   </noteN>
   <noteF>
@@ -2154,11 +2174,11 @@
     <startposL>19</startposL>
   </noteL>
   <noteL>
-    <lineL>1</lineL>
-    <posL>204</posL>
+    <lineL>-3</lineL>
+    <posL>208</posL>
     <typeL>LS</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
+    <startlineL>-3</startlineL>
+    <startposL>208</startposL>
   </noteL>
   <noteL>
     <lineL>3</lineL>
@@ -2371,10 +2391,10 @@
     <startposL>208</startposL>
   </noteL>
   <noteL>
-    <lineL>0</lineL>
+    <lineL>1</lineL>
     <posL>232</posL>
     <typeL>LS</typeL>
-    <startlineL>0</startlineL>
+    <startlineL>1</startlineL>
     <startposL>232</startposL>
   </noteL>
   <noteL>
@@ -2413,10 +2433,10 @@
     <startposL>224</startposL>
   </noteL>
   <noteL>
-    <lineL>1</lineL>
+    <lineL>-3</lineL>
     <posL>228</posL>
     <typeL>LS</typeL>
-    <startlineL>1</startlineL>
+    <startlineL>-3</startlineL>
     <startposL>228</startposL>
   </noteL>
   <noteL>
@@ -3165,8 +3185,8 @@
     <lineL>-2</lineL>
     <posL>210</posL>
     <typeL>LF</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
+    <startlineL>-3</startlineL>
+    <startposL>208</startposL>
   </noteL>
   <noteL>
     <lineL>-3</lineL>
@@ -3589,34 +3609,6 @@
     <startposL>140</startposL>
   </noteL>
   <noteL>
-    <lineL>-3</lineL>
-    <posL>208</posL>
-    <typeL>LM</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
-  </noteL>
-  <noteL>
-    <lineL>-2</lineL>
-    <posL>207</posL>
-    <typeL>LM</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
-  </noteL>
-  <noteL>
-    <lineL>-1</lineL>
-    <posL>206</posL>
-    <typeL>LM</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
-  </noteL>
-  <noteL>
-    <lineL>0</lineL>
-    <posL>205</posL>
-    <typeL>LM</typeL>
-    <startlineL>1</startlineL>
-    <startposL>204</startposL>
-  </noteL>
-  <noteL>
     <lineL>2</lineL>
     <posL>210</posL>
     <typeL>LF</typeL>
@@ -3627,25 +3619,25 @@
     <lineL>3</lineL>
     <posL>238</posL>
     <typeL>LE</typeL>
-    <startlineL>0</startlineL>
+    <startlineL>1</startlineL>
     <startposL>232</startposL>
   </noteL>
   <noteL>
-    <lineL>2</lineL>
+    <lineL>3</lineL>
     <posL>234</posL>
     <typeL>LM</typeL>
-    <startlineL>0</startlineL>
+    <startlineL>1</startlineL>
     <startposL>232</startposL>
   </noteL>
   <noteL>
     <lineL>1</lineL>
     <posL>236</posL>
     <typeL>LM</typeL>
-    <startlineL>0</startlineL>
+    <startlineL>1</startlineL>
     <startposL>232</startposL>
   </noteL>
   <noteL>
-    <lineL>0</lineL>
+    <lineL>-1</lineL>
     <posL>238</posL>
     <typeL>LE</typeL>
     <startlineL>-3</startlineL>
@@ -3659,7 +3651,7 @@
     <startposL>232</startposL>
   </noteL>
   <noteL>
-    <lineL>-2</lineL>
+    <lineL>-3</lineL>
     <posL>236</posL>
     <typeL>LM</typeL>
     <startlineL>-3</startlineL>
@@ -3694,10 +3686,10 @@
     <startposL>224</startposL>
   </noteL>
   <noteL>
-    <lineL>1</lineL>
+    <lineL>-3</lineL>
     <posL>229.3333</posL>
     <typeL>LE</typeL>
-    <startlineL>1</startlineL>
+    <startlineL>-3</startlineL>
     <startposL>228</startposL>
   </noteL>
   <noteL>
@@ -3813,17 +3805,17 @@
     <startposL>309</startposL>
   </noteL>
   <noteL>
-    <lineL>-1</lineL>
+    <lineL>3</lineL>
     <posL>226</posL>
     <typeL>LS</typeL>
-    <startlineL>-1</startlineL>
+    <startlineL>3</startlineL>
     <startposL>226</startposL>
   </noteL>
   <noteL>
-    <lineL>-1</lineL>
-    <posL>227.333</posL>
+    <lineL>3</lineL>
+    <posL>227.5</posL>
     <typeL>LE</typeL>
-    <startlineL>-1</startlineL>
+    <startlineL>3</startlineL>
     <startposL>226</startposL>
   </noteL>
   <noteL>
@@ -3835,7 +3827,7 @@
   </noteL>
   <noteL>
     <lineL>3</lineL>
-    <posL>231.3333</posL>
+    <posL>231.5</posL>
     <typeL>LE</typeL>
     <startlineL>3</startlineL>
     <startposL>230</startposL>
