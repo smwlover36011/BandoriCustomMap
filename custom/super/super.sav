@@ -1389,11 +1389,6 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>3</lineN>
-    <posN>469</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
     <lineN>-1</lineN>
     <posN>319.5</posN>
     <typeN>N</typeN>
@@ -1434,8 +1429,13 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>2</lineN>
-    <posN>467</posN>
+    <lineN>3</lineN>
+    <posN>468</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>3</lineN>
+    <posN>470</posN>
     <typeN>N</typeN>
   </noteN>
   <noteF>
