@@ -1064,12 +1064,12 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
+    <lineN>-2</lineN>
     <posN>318</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>1</lineN>
+    <lineN>2</lineN>
     <posN>326</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1084,22 +1084,22 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>-1</lineN>
     <posN>317</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>1</lineN>
+    <lineN>2</lineN>
     <posN>314</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>0</lineN>
+    <lineN>1</lineN>
     <posN>325</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
+    <lineN>-2</lineN>
     <posN>322</posN>
     <typeN>N</typeN>
   </noteN>
@@ -1269,12 +1269,12 @@
     <typeF>F</typeF>
   </noteF>
   <noteF>
-    <lineF>-2</lineF>
+    <lineF>-3</lineF>
     <posF>315</posF>
     <typeF>F</typeF>
   </noteF>
   <noteF>
-    <lineF>2</lineF>
+    <lineF>3</lineF>
     <posF>323</posF>
     <typeF>F</typeF>
   </noteF>
@@ -2147,31 +2147,31 @@
     <startposL>340</startposL>
   </noteL>
   <noteL>
-    <lineL>2</lineL>
+    <lineL>1</lineL>
     <posL>315</posL>
     <typeL>LS</typeL>
-    <startlineL>2</startlineL>
+    <startlineL>1</startlineL>
     <startposL>315</startposL>
   </noteL>
   <noteL>
     <lineL>3</lineL>
     <posL>318</posL>
     <typeL>LF</typeL>
-    <startlineL>2</startlineL>
+    <startlineL>1</startlineL>
     <startposL>315</startposL>
   </noteL>
   <noteL>
-    <lineL>-2</lineL>
+    <lineL>-1</lineL>
     <posL>323</posL>
     <typeL>LS</typeL>
-    <startlineL>-2</startlineL>
+    <startlineL>-1</startlineL>
     <startposL>323</startposL>
   </noteL>
   <noteL>
     <lineL>-3</lineL>
     <posL>326</posL>
     <typeL>LF</typeL>
-    <startlineL>-2</startlineL>
+    <startlineL>-1</startlineL>
     <startposL>323</startposL>
   </noteL>
 </Save>
