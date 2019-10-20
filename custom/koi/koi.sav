@@ -744,21 +744,6 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
-    <posN>243</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>-2</lineN>
-    <posN>247</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>-2</lineN>
-    <posN>245</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
     <lineN>-3</lineN>
     <posN>246</posN>
     <typeN>N</typeN>
@@ -814,33 +799,8 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>-1</lineN>
-    <posN>224</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>-3</lineN>
-    <posN>225</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>-2</lineN>
-    <posN>226</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>1</lineN>
-    <posN>227</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
     <lineN>3</lineN>
     <posN>228</posN>
-    <typeN>N</typeN>
-  </noteN>
-  <noteN>
-    <lineN>2</lineN>
-    <posN>230</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
@@ -864,18 +824,28 @@
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>1</lineN>
-    <posN>240</posN>
+    <lineN>-3</lineN>
+    <posN>226</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
     <lineN>3</lineN>
-    <posN>241</posN>
+    <posN>242</posN>
     <typeN>N</typeN>
   </noteN>
   <noteN>
-    <lineN>2</lineN>
-    <posN>242</posN>
+    <lineN>-3</lineN>
+    <posN>247</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>-3</lineN>
+    <posN>245</posN>
+    <typeN>N</typeN>
+  </noteN>
+  <noteN>
+    <lineN>3</lineN>
+    <posN>230</posN>
     <typeN>N</typeN>
   </noteN>
   <noteF>
@@ -1629,30 +1599,30 @@
   </noteL>
   <noteL>
     <lineL>2</lineL>
-    <posL>225</posL>
+    <posL>224</posL>
     <typeL>LS</typeL>
     <startlineL>2</startlineL>
-    <startposL>225</startposL>
+    <startposL>224</startposL>
   </noteL>
   <noteL>
     <lineL>2</lineL>
     <posL>226</posL>
     <typeL>LE</typeL>
     <startlineL>2</startlineL>
-    <startposL>225</startposL>
+    <startposL>224</startposL>
   </noteL>
   <noteL>
     <lineL>-2</lineL>
-    <posL>241</posL>
+    <posL>240</posL>
     <typeL>LS</typeL>
     <startlineL>-2</startlineL>
-    <startposL>241</startposL>
+    <startposL>240</startposL>
   </noteL>
   <noteL>
     <lineL>-2</lineL>
     <posL>242</posL>
     <typeL>LE</typeL>
     <startlineL>-2</startlineL>
-    <startposL>241</startposL>
+    <startposL>240</startposL>
   </noteL>
 </Save>
